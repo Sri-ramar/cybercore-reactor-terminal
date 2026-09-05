@@ -253,6 +253,7 @@ export default function App() {
           powerOutput={systemState.powerOutput}
           activeSurgeNode={systemState.activeSurgeNode}
           onNodeClick={handleNodeClick}
+          isWetMode={isWetMode}
         />
 
         {/* 4. Foreground Botanical Overgrowth Layer (Draping in Front of Conduits & Modules) */}

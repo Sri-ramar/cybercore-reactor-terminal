@@ -8,6 +8,7 @@ interface ProceduralHardwareLayerProps {
   powerOutput: number;
   activeSurgeNode: string | null;
   onNodeClick: (nodeId: string, label: string) => void;
+  isWetMode?: boolean;
 }
 
 export const ProceduralHardwareLayer: React.FC<ProceduralHardwareLayerProps> = ({
@@ -15,7 +16,41 @@ export const ProceduralHardwareLayer: React.FC<ProceduralHardwareLayerProps> = (
   powerOutput,
   activeSurgeNode,
   onNodeClick,
+  isWetMode = false,
 }) => {
+  // Hanging water droplet coordinates along underside of horizontal conduits (Wet Mode)
+  const conduitDrips = useMemo(
+    () => [
+      // Top canopy conduit (y=40)
+      { x: 90, y: 40 }, { x: 180, y: 40 }, { x: 270, y: 40 }, { x: 360, y: 40 },
+      // Upper step bus (y=80)
+      { x: 500, y: 80 }, { x: 570, y: 80 }, { x: 640, y: 80 },
+      // Upper right spectrometer bus (y=124)
+      { x: 860, y: 124 }, { x: 930, y: 124 }, { x: 1040, y: 124 }, { x: 1120, y: 124 },
+      // Heat exchanger bus (y=149)
+      { x: 1260, y: 149 }, { x: 1330, y: 149 }, { x: 1440, y: 149 },
+      // Upper right wall margin (y=110)
+      { x: 1520, y: 110 }, { x: 1570, y: 110 },
+      // CPU upper sub-bus (y=180)
+      { x: 310, y: 180 }, { x: 390, y: 180 },
+      // AMD CPU horizontal axis (y=380)
+      { x: 35, y: 380 }, { x: 220, y: 380 }, { x: 360, y: 380 }, { x: 470, y: 380 }, { x: 550, y: 380 },
+      // Telemetry enclosure horizontal axis (y=444)
+      { x: 1040, y: 444 }, { x: 1090, y: 444 }, { x: 1410, y: 444 },
+      // Right wall margin (y=480)
+      { x: 1520, y: 480 }, { x: 1570, y: 480 },
+      // Mid-lower reactor branch (y=540)
+      { x: 550, y: 540 }, { x: 600, y: 540 },
+      // Audio terminal top conduit (y=600)
+      { x: 340, y: 600 }, { x: 420, y: 600 }, { x: 480, y: 600 },
+      // Audio terminal right exit branch (y=675)
+      { x: 450, y: 675 }, { x: 490, y: 675 },
+      // Lower vernier rail & ground bus (y=784)
+      { x: 280, y: 784 }, { x: 370, y: 784 }, { x: 460, y: 784 }, { x: 550, y: 784 }, { x: 630, y: 784 },
+      { x: 1340, y: 784 }, { x: 1420, y: 784 }, { x: 1510, y: 784 }, { x: 1570, y: 784 }
+    ],
+    []
+  );
   // Real-Time Fedora Linux 44 System Telemetry & Hardware Controls
   const {
     stats,
@@ -287,6 +322,15 @@ export const ProceduralHardwareLayer: React.FC<ProceduralHardwareLayerProps> = (
           <filter id="chassis-drop-shadow" x="-10%" y="-10%" width="125%" height="130%">
             <feDropShadow dx="3" dy="5" stdDeviation="4" floodColor="#000000" floodOpacity="0.85" />
           </filter>
+
+          {/* Photorealistic Refractive Hanging Water Droplet Gradient */}
+          <radialGradient id="pipe-hanging-drop" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+            <stop offset="25%" stopColor="#dffff0" stopOpacity="0.65" />
+            <stop offset="60%" stopColor="#40d080" stopOpacity="0.35" />
+            <stop offset="85%" stopColor="#104420" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#041208" stopOpacity="0.95" />
+          </radialGradient>
         </defs>
 
         {/* ======================================================== */}
@@ -324,6 +368,83 @@ export const ProceduralHardwareLayer: React.FC<ProceduralHardwareLayerProps> = (
             </g>
           ))}
         </g>
+
+        {/* ======================================================== */}
+        {/* 1b. WET MODE: HANGING WATER TEARDROPS UNDER PIPES & CONDUITS */}
+        {/* ======================================================== */}
+        {isWetMode && (
+          <g className="conduit-hanging-drips pointer-events-none">
+            {conduitDrips.map((drip, i) => {
+              const dropHeight = 9 + (i % 3) * 4; // 9, 13, 17px
+              const hasFallingDrop = i % 2 === 0;
+              return (
+                <g key={`drip-${i}`} transform={`translate(${drip.x}, ${drip.y + 7.5})`}>
+                  {/* Drop Shadow */}
+                  <ellipse cx="1" cy="2" rx="2.5" ry="1.8" fill="rgba(0,0,0,0.6)" />
+                  {/* Water Contact Wet Band on Pipe Underside */}
+                  <ellipse cx="0" cy="0.5" rx="3.8" ry="1.4" fill="rgba(210, 245, 230, 0.45)" />
+                  {/* Hanging Teardrop Body */}
+                  <path
+                    d={`M -2.2 0 C -2.2 ${dropHeight * 0.45}, -3.0 ${dropHeight * 0.75}, 0 ${dropHeight} C 3.0 ${dropHeight * 0.75}, 2.2 ${dropHeight * 0.45}, 2.2 0 Z`}
+                    fill="url(#pipe-hanging-drop)"
+                    stroke="rgba(0,25,10,0.5)"
+                    strokeWidth="0.4"
+                  />
+                  {/* Specular White Glint */}
+                  <circle cx="-0.8" cy={dropHeight * 0.6} r="0.75" fill="#ffffff" />
+                  {/* Lower Refraction Caustic Glow */}
+                  <circle cx="0.6" cy={dropHeight * 0.82} r="0.6" fill="#88ff44" opacity="0.8" />
+
+                  {/* Detached Falling Droplet beneath occasional tips */}
+                  {hasFallingDrop && (
+                    <g transform={`translate(0, ${dropHeight + 11})`}>
+                      <ellipse cx="0" cy="0" rx="1.1" ry="1.6" fill="url(#pipe-hanging-drop)" opacity="0.85" />
+                      <circle cx="-0.3" cy="-0.4" r="0.4" fill="#ffffff" />
+                    </g>
+                  )}
+                </g>
+              );
+            })}
+
+            {/* WET MODE: Condensation Droplets & Glass Mist Beads on Central Mounting Collar */}
+            <g className="core-collar-condensation pointer-events-none">
+              {[
+                { a: 15, r: 258, sz: 3.2 },
+                { a: 32, r: 265, sz: 2.4 },
+                { a: 55, r: 252, sz: 3.8 },
+                { a: 78, r: 268, sz: 2.2 },
+                { a: 105, r: 255, sz: 4.2 },
+                { a: 125, r: 262, sz: 2.8 },
+                { a: 142, r: 250, sz: 3.5 },
+                { a: 165, r: 266, sz: 2.6 },
+                { a: 195, r: 258, sz: 3.6 },
+                { a: 215, r: 264, sz: 2.4 },
+                { a: 240, r: 252, sz: 4.0 },
+                { a: 265, r: 268, sz: 2.8 },
+                { a: 285, r: 254, sz: 3.4 },
+                { a: 310, r: 262, sz: 2.5 },
+                { a: 335, r: 256, sz: 3.8 },
+                { a: 350, r: 266, sz: 2.0 },
+              ].map((drop, idx) => {
+                const rad = (drop.a * Math.PI) / 180;
+                const cx = 800 + Math.cos(rad) * drop.r;
+                const cy = 450 + Math.sin(rad) * drop.r;
+                return (
+                  <g key={`core-cond-${idx}`}>
+                    <ellipse cx={cx + 0.8} cy={cy + 1.2} rx={drop.sz * 0.9} ry={drop.sz * 0.7} fill="rgba(0,0,0,0.7)" />
+                    <circle cx={cx} cy={cy} r={drop.sz * 0.8} fill="url(#pipe-hanging-drop)" stroke="rgba(0,25,10,0.5)" strokeWidth="0.3" />
+                    <circle cx={cx - drop.sz * 0.28} cy={cy - drop.sz * 0.28} r={drop.sz * 0.25} fill="#ffffff" />
+                  </g>
+                );
+              })}
+              {/* Subtle vertical condensation trickles down the collar */}
+              <path d="M 765 205 Q 764 225 765 245" fill="none" stroke="rgba(215, 245, 255, 0.35)" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M 835 208 Q 836 228 835 248" fill="none" stroke="rgba(215, 245, 255, 0.35)" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M 760 655 Q 761 680 760 705" fill="none" stroke="rgba(215, 245, 255, 0.35)" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M 840 655 Q 839 680 840 705" fill="none" stroke="rgba(215, 245, 255, 0.35)" strokeWidth="1.2" strokeLinecap="round" />
+            </g>
+          </g>
+        )}
 
         {/* Heavy Industrial Chassis Bulkhead Flanges at Boundary Edges */}
         <g>

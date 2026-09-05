@@ -152,6 +152,82 @@ export const ProceduralRealisticWall: React.FC<ProceduralRealisticWallProps> = m
       ctx.stroke();
     });
 
+    // 5b. WET MODE: Atmospheric Vertical Rain Trickles & Condensation Wash on Basalt Wall
+    if (isWetMode) {
+      // 1. Organic Vertical Rain Trickles running down stone masonry
+      const rivuletXs = [
+        35, 75, 115, 160, 210, 250, 290, 340, 390, 430, 480, 530, 570, 620, 660, 700,
+        740, 860, 900, 950, 990, 1040, 1090, 1130, 1180, 1220, 1270, 1310, 1360, 1410,
+        1460, 1510, 1550, 1585
+      ];
+
+      rivuletXs.forEach((rx, idx) => {
+        const startY = (idx * 37) % 200;
+        const totalLen = 220 + ((idx * 53) % 420);
+        let curX = rx;
+        let curY = startY;
+
+        ctx.beginPath();
+        ctx.moveTo(curX, curY);
+        while (curY < startY + totalLen && curY < height) {
+          const stepY = 24 + ((idx + curY) % 28);
+          curX += ((idx % 3) - 1) * 0.9;
+          curY += stepY;
+          ctx.lineTo(curX, curY);
+        }
+
+        // Dark damp shadow border of water rivulet
+        ctx.strokeStyle = 'rgba(0, 8, 3, 0.45)';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+
+        // Refractive glass core of running trickle
+        ctx.strokeStyle = 'rgba(215, 245, 255, 0.28)';
+        ctx.lineWidth = 1.0;
+        ctx.stroke();
+
+        // Terminal droplet bead at foot of trickle
+        if (curY < height - 8) {
+          ctx.fillStyle = 'rgba(220, 250, 255, 0.6)';
+          ctx.beginPath();
+          ctx.arc(curX, curY, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      // 2. Fine falling rain streaks across the scene
+      ctx.strokeStyle = 'rgba(215, 245, 255, 0.15)';
+      ctx.lineWidth = 0.8;
+      for (let i = 0; i < 140; i++) {
+        const sx = (i * 29 + 17) % width;
+        const sy = (i * 43 + 31) % height;
+        const sLen = 28 + (i % 42);
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + 3.0, sy + sLen);
+        ctx.stroke();
+      }
+
+      // 3. Water pooling droplets along horizontal masonry ledge seams
+      horizontalSeams.forEach((sy, sIdx) => {
+        for (let bx = 24; bx < width; bx += 46 + ((sIdx * 13) % 26)) {
+          // Shadow
+          ctx.fillStyle = 'rgba(0, 6, 2, 0.55)';
+          ctx.beginPath();
+          ctx.ellipse(bx, sy + 2.2, 2.0, 1.2, 0, 0, Math.PI * 2);
+          ctx.fill();
+          // Glassy bead
+          ctx.fillStyle = 'rgba(215, 245, 255, 0.5)';
+          ctx.beginPath();
+          ctx.arc(bx - 0.3, sy + 1.6, 1.3, 0, Math.PI * 2);
+          ctx.fill();
+          // Highlight
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(bx - 0.7, sy + 1.1, 0.8, 0.8);
+        }
+      });
+    }
+
     // 6. Recessed Central Circular Well for Orb Bed
     ctx.beginPath();
     ctx.arc(800, 450, 252, 0, Math.PI * 2);
