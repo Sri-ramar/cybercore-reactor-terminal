@@ -67,10 +67,17 @@ For any project, you don't need to manually create repositories in the browser. 
 
 ## Model Context Protocol (MCP) Server
 
-The workspace is configured with `@modelcontextprotocol/server-github` in [`.agents/mcp_config.json`](../mcp_config.json).
-When `GITHUB_PERSONAL_ACCESS_TOKEN` is defined in `~/.env` or environment:
-- The agent directly acquires GitHub tools to create repositories, push commits, create branches, and manage issues.
-- All operations are performed autonomously on behalf of `Sri-ramar`.
+The workspace includes a dedicated FastMCP server:
+- Implementation: [`.agents/mcp/github_mcp_server.py`](../../mcp/github_mcp_server.py)
+- Configuration: [`.agents/mcp_config.json`](../../mcp_config.json)
+
+### Exposed MCP Tools:
+1. `github_create_and_push`: Autonomously creates remote repository, initializes local Git, and pushes.
+2. `github_sync_and_push`: Fast commit and push for ongoing work.
+3. `github_check_repo`: Verifies remote repository status, visibility, and metadata.
+4. `github_list_user_repos`: Lists all repositories for `Sri-ramar`.
+
+See full schema in [references/mcp_tools.md](./references/mcp_tools.md).
 
 ---
 
