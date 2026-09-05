@@ -48,11 +48,38 @@ If authentication is needed:
 
 ---
 
-## Automated Sync Script
-A helper script is available at:
-`./scripts/git_sync.sh`
+## Automated Repository Creation & Push Workflow
 
-Run it to check git status, commit pending changes, and attempt push:
+For any project, you don't need to manually create repositories in the browser. Use the automated script:
+`./scripts/create_and_push_repo.sh`
+
+### Usage:
 ```bash
-./.agents/skills/github-integration/scripts/git_sync.sh "Commit message"
+./.agents/skills/github-integration/scripts/create_and_push_repo.sh [repo-name] [description] [is-private]
 ```
+- Automatically checks if the repo exists under `https://github.com/Sri-ramar/<repo-name>`.
+- If not found, calls the GitHub REST API to automatically create the repository under your account.
+- Initializes git and sets branch `main` if needed.
+- Commits all staged/pending files.
+- Pushes to GitHub and restores a clean remote URL.
+
+---
+
+## Model Context Protocol (MCP) Server
+
+The workspace is configured with `@modelcontextprotocol/server-github` in [`.agents/mcp_config.json`](../mcp_config.json).
+When `GITHUB_PERSONAL_ACCESS_TOKEN` is defined in `~/.env` or environment:
+- The agent directly acquires GitHub tools to create repositories, push commits, create branches, and manage issues.
+- All operations are performed autonomously on behalf of `Sri-ramar`.
+
+---
+
+## One-Time Credential Setup
+
+To enable fully autonomous GitHub creation and pushing:
+```bash
+printf "Enter GITHUB_PERSONAL_ACCESS_TOKEN (typing hidden): " && read -s val && echo && echo "GITHUB_PERSONAL_ACCESS_TOKEN=$val" >> ~/.env && echo "Saved to ~/.env."
+```
+Token requirements:
+- Create at [GitHub Settings > Personal Access Tokens](https://github.com/settings/tokens).
+- Scopes: `repo` (Full control of private and public repositories).

@@ -12,3 +12,6 @@
 - Target repository is `cybercore-reactor-terminal`.
 - Use the workspace skill at `.agents/skills/github-integration/SKILL.md` for GitHub syncing workflows.
 - The MCP server configuration is located at `.agents/mcp_config.json`.
+
+## Automated Project Creation
+- For new projects or repositories, the agent can create the remote GitHub repository automatically via API / MCP using `.agents/skills/github-integration/scripts/create_and_push_repo.sh` rather than requiring manual creation on GitHub.
