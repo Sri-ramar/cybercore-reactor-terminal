@@ -1,0 +1,6 @@
+{
+  "name": "CyberCore Reactor Terminal",
+  "description": "An ancient overgrown bio-cybernetic reactor terminal featuring a terrarium crystal glass dome, radiant bioluminescent emerald energy conduits, creeping ivy vines, fern fronds, petrified wood hardware housings, and tactile biological console controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

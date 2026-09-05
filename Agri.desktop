@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Agri-Tech CyberCore Terminal
+GenericName=Bio-Cybernetic Reactor Terminal
+Comment=Interactive Solarpunk Terminal with Hardware-Accelerated NVIDIA RTX 3050 Graphics
+Exec=/home/sriramar/Documents/Projects/Agri-tech/cybercore-reactor-terminal/launch_app.sh
+Path=/home/sriramar/Documents/Projects/Agri-tech/cybercore-reactor-terminal
+Icon=utilities-system-monitor
+Terminal=false
+Categories=Development;Graphics;Science;Game;
+StartupNotify=true
+PrefersNonDefaultGPU=true
+X-KDE-RunOnDiscreteGpu=true
+X-KDE-SubstituteUID=false

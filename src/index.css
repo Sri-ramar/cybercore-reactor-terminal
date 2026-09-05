@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-cyber: 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-hud: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-code: 'Share Tech Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-hud);
+  }
+}
+
+/* ======================================================== */
+/* TRUE GPU HARDWARE-ACCELERATED 3D SWAYING (120+ FPS SOLID) */
+/* ======================================================== */
+@keyframes gpuLeafSwayA {
+  0% { transform: rotate3d(0, 0, 1, -8.5deg); }
+  100% { transform: rotate3d(0, 0, 1, 8.5deg); }
+}
+
+@keyframes gpuLeafSwayB {
+  0% { transform: rotate3d(0, 0, 1, 8.0deg); }
+  100% { transform: rotate3d(0, 0, 1, -8.0deg); }
+}
+
+@keyframes gpuLeafSwayC {
+  0% { transform: rotate3d(0, 0, 1, -7.5deg); }
+  100% { transform: rotate3d(0, 0, 1, 9.0deg); }
+}
+
+@keyframes gpuLeafSwayD {
+  0% { transform: rotate3d(0, 0, 1, 8.8deg); }
+  100% { transform: rotate3d(0, 0, 1, -7.5deg); }
+}
+
+@keyframes gpuTwigSway {
+  0% { transform: rotate3d(0, 0, 1, -2.4deg); }
+  100% { transform: rotate3d(0, 0, 1, 2.4deg); }
+}
+
+.gpu-leaf-sway-a, .anime-leaf-sway-a {
+  transform-origin: 0 0;
+  animation: gpuLeafSwayA 3.6s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-leaf-sway-b, .anime-leaf-sway-b {
+  transform-origin: 0 0;
+  animation: gpuLeafSwayB 4.2s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -1.4s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-leaf-sway-c, .anime-leaf-sway-c {
+  transform-origin: 0 0;
+  animation: gpuLeafSwayC 3.8s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -2.6s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-leaf-sway-d, .anime-leaf-sway-d {
+  transform-origin: 0 0;
+  animation: gpuLeafSwayD 4.5s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -3.3s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-twig-sway {
+  transform-origin: 0 0;
+  animation: gpuTwigSway 6.8s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* ======================================================== */
+/* GPU HARDWARE-ACCELERATED BOTTOM MEADOW GRASS LATERAL DRIFT */
+/* ======================================================== */
+@keyframes gpuGrassDriftA {
+  0% { transform: translate3d(-18px, 0, 0) rotate3d(0, 0, 1, -5.5deg) skewX(-6deg); }
+  100% { transform: translate3d(22px, 0, 0) rotate3d(0, 0, 1, 6.5deg) skewX(7deg); }
+}
+
+@keyframes gpuGrassDriftB {
+  0% { transform: translate3d(20px, 0, 0) rotate3d(0, 0, 1, 6.0deg) skewX(6deg); }
+  100% { transform: translate3d(-16px, 0, 0) rotate3d(0, 0, 1, -6.5deg) skewX(-8deg); }
+}
+
+@keyframes gpuGrassDriftC {
+  0% { transform: translate3d(-14px, 0, 0) rotate3d(0, 0, 1, -4.5deg) skewX(-5deg); }
+  100% { transform: translate3d(25px, 0, 0) rotate3d(0, 0, 1, 7.0deg) skewX(8deg); }
+}
+
+@keyframes gpuGrassDriftD {
+  0% { transform: translate3d(24px, 0, 0) rotate3d(0, 0, 1, 7.5deg) skewX(7deg); }
+  100% { transform: translate3d(-20px, 0, 0) rotate3d(0, 0, 1, -5.5deg) skewX(-6deg); }
+}
+
+.gpu-grass-sway-a, .gpu-grass-drift-a {
+  transform-origin: 0 100%;
+  animation: gpuGrassDriftA 5.4s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-grass-sway-b, .gpu-grass-drift-b {
+  transform-origin: 0 100%;
+  animation: gpuGrassDriftB 6.2s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -2.2s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-grass-sway-c, .gpu-grass-drift-c {
+  transform-origin: 0 100%;
+  animation: gpuGrassDriftC 5.8s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -3.5s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.gpu-grass-sway-d, .gpu-grass-drift-d {
+  transform-origin: 0 100%;
+  animation: gpuGrassDriftD 6.8s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  animation-delay: -4.2s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Custom Cyberpunk Glows & Skeuomorphic Shadows */
+.glow-amber-intense {
+  filter: drop-shadow(0 0 3px #ffb300) drop-shadow(0 0 10px #ff9100) drop-shadow(0 0 20px rgba(255, 170, 0, 0.6));
+}
+
+.glow-amber-soft {
+  filter: drop-shadow(0 0 2px #ffc107) drop-shadow(0 0 6px rgba(255, 170, 0, 0.4));
+}
+
+.glow-amber-text {
+  text-shadow: 0 0 4px #ffc107, 0 0 12px rgba(255, 153, 0, 0.8), 0 0 24px rgba(255, 130, 0, 0.4);
+}
+
+.metal-bevel-chassis {
+  background: linear-gradient(135deg, #1c202a 0%, #11141b 25%, #07090d 50%, #11141b 75%, #1c202a 100%);
+  box-shadow: 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.95),
+    inset 0 0 25px rgba(0, 0, 0, 0.95),
+    0 15px 40px rgba(0, 0, 0, 0.95),
+    0 0 1px 1px #2a3240;
+}
+
+.metal-bolt {
+  background: radial-gradient(circle at 35% 35%, #3e4756 0%, #1c222c 50%, #080a0e 100%);
+  box-shadow: 
+    inset 1px 1px 1px rgba(255, 255, 255, 0.35),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.95),
+    0 2px 6px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(255, 179, 0, 0.3);
+}
+
+.glass-sapphire-lens {
+  background: radial-gradient(circle at 40% 35%, rgba(255, 235, 180, 0.12) 0%, rgba(200, 150, 40, 0.05) 40%, rgba(0, 0, 0, 0.4) 80%);
+  backdrop-filter: blur(8px) contrast(1.15) brightness(1.08);
+  box-shadow: 
+    inset 0 0 25px rgba(255, 190, 40, 0.35),
+    inset 2px 2px 10px rgba(255, 255, 255, 0.5),
+    inset -3px -3px 15px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 170, 0, 0.25);
+}
+
+.glass-hud-panel {
+  background: linear-gradient(145deg, rgba(20, 24, 30, 0.65) 0%, rgba(10, 12, 16, 0.82) 100%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 195, 60, 0.22);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 20px rgba(255, 170, 0, 0.04);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 12, 16, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 180, 0, 0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 180, 0, 0.6);
+}
