@@ -27,6 +27,7 @@ export default function App() {
   const [currentThemeId, setCurrentThemeId] = useState<ThemeMode>('overgrown-bio');
   const [audioMuted, setAudioMuted] = useState(false);
   const [isEditingFoliage, setIsEditingFoliage] = useState(false);
+  const [isWetMode, setIsWetMode] = useState(false);
 
   // Persistent Foliage Layout (Loaded from localStorage or defaults)
   const [foliageList, setFoliageList] = useState<FoliageSprayItem[]>(() => {
@@ -214,6 +215,11 @@ export default function App() {
           setIsEditingFoliage((prev) => !prev);
         }
       }
+      if (e.key === 'w' || e.key === 'W') {
+        if (!(e.target instanceof HTMLInputElement)) {
+          setIsWetMode((prev) => !prev);
+        }
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -228,13 +234,14 @@ export default function App() {
       {/* 16:9 Aspect Ratio Constrained Cybernetic Panel Chassis */}
       <div className="relative w-full h-full max-w-[177.78vh] max-h-[56.25vw] aspect-video bg-[#030406] shadow-[0_0_120px_rgba(0,0,0,1)] overflow-hidden">
         {/* 1. Procedural High-Fidelity Dark Slate Rock & Industrial Relief Wall */}
-        <ProceduralRealisticWall theme={currentTheme} />
+        <ProceduralRealisticWall theme={currentTheme} isWetMode={isWetMode} />
 
         {/* 2. Realistic Procedural Botanical Foliage Engine (Behind Conduits) */}
         <ProceduralBotanicalEngine
           theme={currentTheme}
           layer="back"
           foliageList={foliageList}
+          isWetMode={isWetMode}
         />
 
         {/* 2b. High-Performance Dark Meadow Grass Layer (Behind Bottom UI & Hardware) */}
@@ -253,6 +260,7 @@ export default function App() {
           theme={currentTheme}
           layer="front"
           foliageList={foliageList}
+          isWetMode={isWetMode}
         />
 
         {/* 5. Live Floating Bioluminescent Spores */}
@@ -302,6 +310,8 @@ export default function App() {
           audioEngineReady={true}
           isEditingFoliage={isEditingFoliage}
           onToggleEditFoliage={() => setIsEditingFoliage((prev) => !prev)}
+          isWetMode={isWetMode}
+          onToggleWetMode={() => setIsWetMode((prev) => !prev)}
         />
       </div>
     </main>

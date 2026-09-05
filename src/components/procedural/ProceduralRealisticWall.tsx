@@ -4,6 +4,7 @@ import { ThemeConfig } from '../../types';
 interface ProceduralRealisticWallProps {
   theme: ThemeConfig;
   powerOutput?: number;
+  isWetMode?: boolean;
 }
 
 /**
@@ -11,7 +12,7 @@ interface ProceduralRealisticWallProps {
  * - Uses GPU-accelerated pattern tiles instead of 6-million loop CPU pixel crunching
  * - Cached in GPU VRAM with zero main-thread freezing
  */
-export const ProceduralRealisticWall: React.FC<ProceduralRealisticWallProps> = memo(({ theme }) => {
+export const ProceduralRealisticWall: React.FC<ProceduralRealisticWallProps> = memo(({ theme, isWetMode = false }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -62,9 +63,10 @@ export const ProceduralRealisticWall: React.FC<ProceduralRealisticWallProps> = m
 
     ctx.save();
 
-    // 3. Wet Obsidian Specular Moisture Glints (50 optimized GPU blits)
-    ctx.fillStyle = 'rgba(210, 245, 220, 0.35)';
-    for (let i = 0; i < 80; i++) {
+    // 3. Wet Obsidian Specular Moisture Glints (optimized GPU blits)
+    ctx.fillStyle = isWetMode ? 'rgba(215, 245, 255, 0.55)' : 'rgba(210, 245, 220, 0.35)';
+    const glintCount = isWetMode ? 140 : 80;
+    for (let i = 0; i < glintCount; i++) {
       const gx = Math.random() * width;
       const gy = Math.random() * height;
       const gr = 0.8 + Math.random() * 1.6;
@@ -183,7 +185,7 @@ export const ProceduralRealisticWall: React.FC<ProceduralRealisticWallProps> = m
     ctx.fillRect(0, 0, width, height);
 
     ctx.restore();
-  }, [theme]);
+  }, [theme, isWetMode]);
 
   return (
     <canvas

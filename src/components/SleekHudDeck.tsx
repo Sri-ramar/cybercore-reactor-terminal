@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Activity, Shield, Zap, Sparkles, Volume2, VolumeX, Palette, ChevronUp, ChevronDown, Eye, EyeOff } from 'lucide-react';
+import { Activity, Shield, Zap, Sparkles, Volume2, VolumeX, Palette, ChevronUp, ChevronDown, Eye, EyeOff, Droplets } from 'lucide-react';
 import { ThemeConfig, SystemState } from '../types';
 
 interface SleekHudDeckProps {
@@ -17,6 +17,8 @@ interface SleekHudDeckProps {
   audioEngineReady: boolean;
   isEditingFoliage?: boolean;
   onToggleEditFoliage?: () => void;
+  isWetMode?: boolean;
+  onToggleWetMode?: () => void;
 }
 
 export const SleekHudDeck: React.FC<SleekHudDeckProps> = ({
@@ -32,6 +34,8 @@ export const SleekHudDeck: React.FC<SleekHudDeckProps> = ({
   onToggleAudio,
   isEditingFoliage = false,
   onToggleEditFoliage,
+  isWetMode = false,
+  onToggleWetMode,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isBarHidden, setIsBarHidden] = useState(false);
@@ -85,6 +89,23 @@ export const SleekHudDeck: React.FC<SleekHudDeckProps> = ({
             >
               <Sparkles className="w-3 h-3 text-emerald-400" />
               <span>{isEditingFoliage ? 'CLOSE EDITOR' : 'EDIT FOLIAGE'}</span>
+            </button>
+          )}
+
+          {/* Toggle Wet Dew & Condensation Mode */}
+          {onToggleWetMode && (
+            <button
+              id="toggle-wet-mode-btn"
+              onClick={onToggleWetMode}
+              className={`flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-code font-bold uppercase transition-all shadow-md active:scale-95 border ${
+                isWetMode
+                  ? 'bg-cyan-500/25 text-cyan-200 border-cyan-400 font-extrabold shadow-[0_0_12px_rgba(6,182,212,0.4)]'
+                  : 'bg-[#09151e] text-cyan-400/80 hover:bg-[#0f2333] border-[#163a4e]'
+              }`}
+              title="Toggle Wet Dew & Condensation (or press 'W' on keyboard to compare)"
+            >
+              <Droplets className={`w-3 h-3 ${isWetMode ? 'text-cyan-300 animate-pulse' : 'text-cyan-500'}`} />
+              <span>{isWetMode ? '💧 WET DEW: ON' : '💧 WET DEW: OFF'}</span>
             </button>
           )}
 

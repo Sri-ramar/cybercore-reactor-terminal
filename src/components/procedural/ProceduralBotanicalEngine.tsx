@@ -6,6 +6,7 @@ interface ProceduralBotanicalEngineProps {
   theme: ThemeConfig;
   layer?: 'back' | 'front' | 'both';
   foliageList?: FoliageSprayItem[];
+  isWetMode?: boolean;
 }
 
 export type LeafShadeVariant = 'deep-shade' | 'mature-olive' | 'sunlit-emerald' | 'young-chartreuse' | 'golden-russet';
@@ -154,6 +155,7 @@ export const ProceduralBotanicalEngine: React.FC<ProceduralBotanicalEngineProps>
   theme,
   layer = 'both',
   foliageList = DEFAULT_FOLIAGE_LAYOUT,
+  isWetMode = false,
 }) => {
   const showBack = layer === 'back' || layer === 'both';
   const showFront = layer === 'front' || layer === 'both';
@@ -246,6 +248,15 @@ export const ProceduralBotanicalEngine: React.FC<ProceduralBotanicalEngineProps>
           <stop offset="100%" stopColor="#082202" />
         </radialGradient>
 
+        {/* Photorealistic Refractive Dew Drop Lens Gradient */}
+        <radialGradient id="dew-drop-lens" cx="30%" cy="30%" r="70%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+          <stop offset="25%" stopColor="#d4ffbb" stopOpacity="0.5" />
+          <stop offset="60%" stopColor="#449918" stopOpacity="0.3" />
+          <stop offset="85%" stopColor="#1a550c" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="#061c04" stopOpacity="0.85" />
+        </radialGradient>
+
         {/* GPU VRAM MASTER LEAF TEMPLATES (Parsed ONCE in GPU memory) */}
         {(['deep-shade', 'mature-olive', 'sunlit-emerald', 'young-chartreuse', 'golden-russet'] as LeafShadeVariant[]).map((v) => {
           const isBack = v === 'deep-shade';
@@ -272,6 +283,26 @@ export const ProceduralBotanicalEngine: React.FC<ProceduralBotanicalEngineProps>
                   fill="url(#tree-leaf-glint)"
                   opacity="0.4"
                 />
+              )}
+              {/* Photorealistic Crystalline Dew Droplets (Visible when Wet Mode is active) */}
+              {isWetMode && !isBack && (
+                <g className="dew-droplets pointer-events-none">
+                  {/* Droplet 1: Large morning dew bead */}
+                  <ellipse cx="-4" cy="-24" rx="2.6" ry="3.4" fill="rgba(0,18,6,0.6)" transform="rotate(-18, -4, -24)" />
+                  <ellipse cx="-4.3" cy="-24.5" rx="2.4" ry="3.0" fill="url(#dew-drop-lens)" transform="rotate(-18, -4, -24)" />
+                  <circle cx="-5.3" cy="-26.0" r="0.8" fill="#ffffff" />
+                  <circle cx="-3.4" cy="-23.0" r="0.7" fill="#88ff44" opacity="0.75" />
+
+                  {/* Droplet 2: Secondary droplet */}
+                  <ellipse cx="5" cy="-15" rx="1.9" ry="2.3" fill="rgba(0,18,6,0.5)" transform="rotate(12, 5, -15)" />
+                  <ellipse cx="4.8" cy="-15.4" rx="1.7" ry="2.0" fill="url(#dew-drop-lens)" transform="rotate(12, 5, -15)" />
+                  <circle cx="4.1" cy="-16.3" r="0.6" fill="#ffffff" />
+
+                  {/* Droplet 3: Tiny mist bead near tip */}
+                  <circle cx="-1" cy="-36" r="1.2" fill="rgba(0,18,6,0.45)" />
+                  <circle cx="-1.2" cy="-36.2" r="1.1" fill="url(#dew-drop-lens)" />
+                  <circle cx="-1.6" cy="-36.6" r="0.5" fill="#ffffff" />
+                </g>
               )}
             </g>
           );
