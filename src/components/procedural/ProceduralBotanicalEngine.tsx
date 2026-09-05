@@ -302,14 +302,6 @@ export const ProceduralBotanicalEngine: React.FC<ProceduralBotanicalEngineProps>
                   <circle cx="-1" cy="-36" r="1.2" fill="rgba(0,18,6,0.45)" />
                   <circle cx="-1.2" cy="-36.2" r="1.1" fill="url(#dew-drop-lens)" />
                   <circle cx="-1.6" cy="-36.6" r="0.5" fill="#ffffff" />
-
-                  {/* Droplet 4: Hanging gravity teardrop at leaf blade tip */}
-                  <g transform="translate(0, -47)">
-                    <ellipse cx="0.4" cy="4" rx="1.6" ry="3.2" fill="rgba(0,18,6,0.6)" />
-                    <path d="M -1.2 0 C -1.6 2.5, -2.4 5.0, 0 8.0 C 2.4 5.0, 1.6 2.5, 1.2 0 Z" fill="url(#dew-drop-lens)" />
-                    <circle cx="-0.5" cy="4.2" r="0.65" fill="#ffffff" />
-                    <circle cx="0.3" cy="6.6" r="0.45" fill="#9eff40" opacity="0.8" />
-                  </g>
                 </g>
               )}
             </g>
