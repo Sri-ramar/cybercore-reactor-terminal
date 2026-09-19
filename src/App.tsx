@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import backgroundImageUrl from '../assets/Background.png';
+import { ProceduralRealisticWall } from './components/procedural/ProceduralRealisticWall';
+import { SpaceVoidBackground } from './components/procedural/SpaceVoidBackground';
+import { SpaceHardwareElements } from './components/procedural/SpaceHardwareElements';
 import { ProceduralBotanicalEngine } from './components/procedural/ProceduralBotanicalEngine';
 import { ProceduralBottomGrassLayer } from './components/procedural/ProceduralBottomGrassLayer';
 import { ProceduralHardwareLayer } from './components/procedural/ProceduralHardwareLayer';
@@ -11,7 +13,7 @@ import { DEFAULT_FOLIAGE_LAYOUT, FoliageSprayItem, STORAGE_KEY_FOLIAGE } from '.
 import { THEMES } from './data/themes';
 import { ThemeConfig, ThemeMode } from './types';
 import { soundFx } from './utils/soundEngine';
-import soothingBgmUrl from '../soothe_music/Shinchan has such a soothing BGM..[rebalanced].mp3';
+import soothingBgmUrl from '../soothe_music/Hans Zimmer - S.T.A.Y (Interstellar Main Theme)(slowed  reverb).mp3';
 
 export interface SystemState {
   powerOutput: number;
@@ -24,7 +26,7 @@ export interface SystemState {
 }
 
 export default function App() {
-  const [currentThemeId, setCurrentThemeId] = useState<ThemeMode>('overgrown-bio');
+  const [currentThemeId, setCurrentThemeId] = useState<ThemeMode>('neon-cyan');
   const [audioMuted, setAudioMuted] = useState(false);
   const [isEditingFoliage, setIsEditingFoliage] = useState(false);
   const [isWetMode, setIsWetMode] = useState(false);
@@ -230,70 +232,56 @@ export default function App() {
     <main
       id="cybercore-root-terminal"
       className="relative w-screen h-screen bg-[#000000] flex items-center justify-center overflow-hidden select-none"
-      style={{
-        backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%), url(${backgroundImageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
     >
       {/* 16:9 Aspect Ratio Constrained Cybernetic Panel Chassis */}
       <div className="relative w-full h-full max-w-[177.78vh] max-h-[56.25vw] aspect-video bg-[#030406] shadow-[0_0_120px_rgba(0,0,0,1)] overflow-hidden">
-        {/* 1. Industrial Backplate Wall */}
-        <img
-          src={backgroundImageUrl}
-          alt="Reactor Terminal Background"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none z-0"
-        />
+        {/* 1. Background: Deep Space Pitch-Black Void with Micro Starfield */}
+        {currentThemeId === 'overgrown-bio' ? (
+          <ProceduralRealisticWall theme={currentTheme} isWetMode={isWetMode} />
+        ) : (
+          <SpaceVoidBackground theme={currentTheme} />
+        )}
 
-        {/* Shifted UI Assembly (-2.07% Y-offset to align with background circle center) */}
-        <div
-          className="absolute inset-0 w-full h-full pointer-events-none [&>*]:pointer-events-auto"
-          style={{ transform: 'translateY(-2.07%)' }}
-        >
-          {/* 2. Realistic Procedural Botanical Foliage Engine (Behind Conduits) */}
-          <ProceduralBotanicalEngine
-            theme={currentTheme}
-            layer="back"
-            foliageList={foliageList}
-            isWetMode={isWetMode}
-          />
+        {/* 2. Botanical Foliage & Meadow Grass (Only rendered in overgrown-bio mode) */}
+        {currentThemeId === 'overgrown-bio' && (
+          <>
+            <ProceduralBotanicalEngine
+              theme={currentTheme}
+              layer="back"
+              foliageList={foliageList}
+              isWetMode={isWetMode}
+            />
+            <ProceduralBottomGrassLayer theme={currentTheme} />
+          </>
+        )}
 
-          {/* 3. Complex Non-Linear Stepped Conduits, Skeuomorphic Modules & Interactive Hotspots */}
-          <ProceduralHardwareLayer
-            theme={currentTheme}
-            powerOutput={systemState.powerOutput}
-            activeSurgeNode={systemState.activeSurgeNode}
-            onNodeClick={handleNodeClick}
-          />
+        {/* Interactive UI Hardware & Core Container (Shifted -2.125% Y to align with -20px shifted 8K core) */}
+        <div className="absolute inset-0 -translate-y-[2.125%] pointer-events-none">
+          <div className="relative w-full h-full pointer-events-auto">
+            {/* 3. Complex Non-Linear Stepped Conduits, Skeuomorphic Modules & Interactive Hotspots */}
+            <ProceduralHardwareLayer
+              theme={currentTheme}
+              powerOutput={systemState.powerOutput}
+              activeSurgeNode={systemState.activeSurgeNode}
+              onNodeClick={handleNodeClick}
+            />
 
-          {/* 4. Foreground Botanical Overgrowth Layer (Draping in Front of Conduits & Modules) */}
-          <ProceduralBotanicalEngine
-            theme={currentTheme}
-            layer="front"
-            foliageList={foliageList}
-            isWetMode={isWetMode}
-          />
+            {/* 3b. Space Hardware: Orbital Satellite & Photovoltaic Solar Wings (Matches Image 2) */}
+            {currentThemeId !== 'overgrown-bio' && (
+              <SpaceHardwareElements theme={currentTheme} />
+            )}
 
-          {/* 5. Live Floating Bioluminescent Spores */}
-          <ProceduralParticleSystem
-            theme={currentTheme}
-            activeSurgeNode={systemState.activeSurgeNode}
-            powerOutput={systemState.powerOutput}
-          />
-
-          {/* 6. 3D Spherical Terrarium Orb, Steady Rotating Reticles & Optical Aperture Core */}
-          <ProceduralCoreOrb
-            theme={currentTheme}
-            powerOutput={systemState.powerOutput}
-            rpm={systemState.rpm}
-            resonanceActive={systemState.resonance}
-            onCoreClick={handleOrbToggleMusic}
-            isPlayingMusic={isPlayingMusic}
-          />
+            {/* 6. 3D Spherical Terrarium Orb, Steady Rotating Reticles & Optical Aperture Core */}
+            <ProceduralCoreOrb
+              theme={currentTheme}
+              powerOutput={systemState.powerOutput}
+              rpm={systemState.rpm}
+              resonanceActive={systemState.resonance}
+              onCoreClick={handleOrbToggleMusic}
+              isPlayingMusic={isPlayingMusic}
+            />
+          </div>
         </div>
-
-        {/* 2b. High-Performance Dark Meadow Grass Layer (Anchored to Chassis Bottom) */}
-        <ProceduralBottomGrassLayer theme={currentTheme} />
 
         {/* 7. Optical Flash Screen on Purge */}
         {systemState.isPurging && (

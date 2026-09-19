@@ -38,7 +38,7 @@ export const SleekHudDeck: React.FC<SleekHudDeckProps> = ({
   onToggleWetMode,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isBarHidden, setIsBarHidden] = useState(false);
+  const [isBarHidden, setIsBarHidden] = useState(true);
   const [showPaletteMenu, setShowPaletteMenu] = useState(false);
 
   if (isBarHidden) {

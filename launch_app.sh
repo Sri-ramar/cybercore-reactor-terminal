@@ -5,8 +5,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$DIR"
 
-# Ensure local Vite dev server is running on port 3000
-if ! nc -z 127.0.0.1 3001 2>/dev/null; then
+# Ensure local Vite dev server is running on port 3007
+if ! nc -z 127.0.0.1 3007 2>/dev/null; then
     echo "Starting local Vite server in background..."
     nohup npm run dev > /dev/null 2>&1 &
     sleep 2
@@ -32,11 +32,11 @@ if [ "$1" == "--native" ]; then
 fi
 
 if which brave-browser >/dev/null 2>&1; then
-    exec switcherooctl launch brave-browser --user-data-dir="$PROFILE_DIR" --app="http://localhost:3001/" $GPU_FLAGS "$@"
+    exec switcherooctl launch brave-browser --user-data-dir="$PROFILE_DIR" --app="http://localhost:3007/" $GPU_FLAGS "$@"
 elif which google-chrome >/dev/null 2>&1; then
-    exec switcherooctl launch google-chrome --user-data-dir="$PROFILE_DIR" --app="http://localhost:3001/" $GPU_FLAGS "$@"
+    exec switcherooctl launch google-chrome --user-data-dir="$PROFILE_DIR" --app="http://localhost:3007/" $GPU_FLAGS "$@"
 elif which chromium >/dev/null 2>&1; then
-    exec switcherooctl launch chromium --user-data-dir="$PROFILE_DIR" --app="http://localhost:3001/" $GPU_FLAGS "$@"
+    exec switcherooctl launch chromium --user-data-dir="$PROFILE_DIR" --app="http://localhost:3007/" $GPU_FLAGS "$@"
 else
     # Dedicated Python PyQt6 QtWebEngine runner on NVIDIA RTX 3050
     exec /usr/bin/python3 "$DIR/run_terminal_nvidia.py"

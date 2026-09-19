@@ -1,18 +1,53 @@
 <div align="center">
-  <img width="100%" alt="CyberCore Reactor Terminal" src="assets/terminal_preview.png" />
-  <h1>CyberCore Reactor Terminal</h1>
-  <p>Procedural Biomechanical Cybernetic Reactor UI with Real-Time Telemetry & Audio Synthesis</p>
+
+# 🌌 CyberCore Reactor Terminal MK-IV
+
+**Photorealistic 8K Deep Space Cybernetic Reactor Terminal with Real-Time Linux Kernel Telemetry**
+
+![CyberCore Reactor Terminal Preview](assets/preview.png)
+
 </div>
 
-View your app in AI Studio: https://ai.studio/apps/5a96c8c5-0a18-4069-87f5-4a1321474b2e
+---
 
-## Run Locally
+## ⚡ Overview
 
-**Prerequisites:**  Node.js
+CyberCore Reactor Terminal is an 8K photorealistic cybernetic reactor interface designed for deep-space telemetry, system monitoring, and immersive ambient audio.
 
+- **8K Photorealistic Hardware Layer**: 7680 × 4322 native UHD brushed titanium bulkhead with multi-tier contact shadows.
+- **Quantum Bio-Reactor Core**: Counter-rotating chronometer reticles, high-speed orbital neon plasma sweep, and singularity pulse.
+- **Live Fedora Linux Telemetry**: Real-time AMD Ryzen CPU frequency & load, k10temp thermal metrics, PipeWire master audio volume, and system load average tracking.
+- **Interactive Oscilloscope & Controls**: Real-time harmonic standing wave canvas, tactical radar sweep, and physical Phoenix bus pins.
+- **Ambient Space Audio**: Integrated soothing background audio (Hans Zimmer - S.T.A.Y Interstellar Theme).
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- Python 3 (for hardware sensor daemon, optional)
+
+### Run Locally
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+
+2. Launch development server (Port 3007):
+   ```bash
+   npm run dev
+   ```
+
+3. Launch with full desktop window & hardware telemetry:
+   ```bash
+   python3 run_terminal_nvidia.py
+   ```
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend**: React 19, TypeScript, Tailwind CSS, Framer Motion, HTML5 Canvas
+- **VFX / Rendering**: 8K UHD composited hardware layer, SVG laser optics, Web Audio API
+- **Telemetry**: Linux `/proc` and `sysfs` kernel probes (AMD k10temp, PipeWire, NVIDIA dGPU)

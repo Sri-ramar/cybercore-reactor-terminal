@@ -33,7 +33,7 @@ from PyQt6.QtWebEngineCore import QWebEngineSettings, QWebEngineProfile
 
 
 class CyberCoreWindow(QMainWindow):
-    def __init__(self, target_url="http://localhost:3000/"):
+    def __init__(self, target_url="http://localhost:3007/"):
         super().__init__()
         self.setWindowTitle("CyberCore Reactor Terminal // NVIDIA RTX 3050")
         self.resize(1600, 900)
@@ -85,7 +85,7 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("CyberCore Reactor Terminal")
 
-    target_url = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3000/"
+    target_url = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3007/"
     window = CyberCoreWindow(target_url)
     window.show()
 
