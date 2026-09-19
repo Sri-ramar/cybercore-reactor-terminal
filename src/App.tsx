@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ProceduralRealisticWall } from './components/procedural/ProceduralRealisticWall';
+import backgroundImageUrl from '../assets/Background.png';
 import { ProceduralBotanicalEngine } from './components/procedural/ProceduralBotanicalEngine';
 import { ProceduralBottomGrassLayer } from './components/procedural/ProceduralBottomGrassLayer';
 import { ProceduralHardwareLayer } from './components/procedural/ProceduralHardwareLayer';
@@ -230,55 +230,70 @@ export default function App() {
     <main
       id="cybercore-root-terminal"
       className="relative w-screen h-screen bg-[#000000] flex items-center justify-center overflow-hidden select-none"
+      style={{
+        backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.95) 100%), url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       {/* 16:9 Aspect Ratio Constrained Cybernetic Panel Chassis */}
       <div className="relative w-full h-full max-w-[177.78vh] max-h-[56.25vw] aspect-video bg-[#030406] shadow-[0_0_120px_rgba(0,0,0,1)] overflow-hidden">
-        {/* 1. Procedural High-Fidelity Dark Slate Rock & Industrial Relief Wall */}
-        <ProceduralRealisticWall theme={currentTheme} isWetMode={isWetMode} />
-
-        {/* 2. Realistic Procedural Botanical Foliage Engine (Behind Conduits) */}
-        <ProceduralBotanicalEngine
-          theme={currentTheme}
-          layer="back"
-          foliageList={foliageList}
-          isWetMode={isWetMode}
+        {/* 1. Industrial Backplate Wall */}
+        <img
+          src={backgroundImageUrl}
+          alt="Reactor Terminal Background"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none z-0"
         />
 
-        {/* 2b. High-Performance Dark Meadow Grass Layer (Behind Bottom UI & Hardware) */}
+        {/* Shifted UI Assembly (-2.07% Y-offset to align with background circle center) */}
+        <div
+          className="absolute inset-0 w-full h-full pointer-events-none [&>*]:pointer-events-auto"
+          style={{ transform: 'translateY(-2.07%)' }}
+        >
+          {/* 2. Realistic Procedural Botanical Foliage Engine (Behind Conduits) */}
+          <ProceduralBotanicalEngine
+            theme={currentTheme}
+            layer="back"
+            foliageList={foliageList}
+            isWetMode={isWetMode}
+          />
+
+          {/* 3. Complex Non-Linear Stepped Conduits, Skeuomorphic Modules & Interactive Hotspots */}
+          <ProceduralHardwareLayer
+            theme={currentTheme}
+            powerOutput={systemState.powerOutput}
+            activeSurgeNode={systemState.activeSurgeNode}
+            onNodeClick={handleNodeClick}
+          />
+
+          {/* 4. Foreground Botanical Overgrowth Layer (Draping in Front of Conduits & Modules) */}
+          <ProceduralBotanicalEngine
+            theme={currentTheme}
+            layer="front"
+            foliageList={foliageList}
+            isWetMode={isWetMode}
+          />
+
+          {/* 5. Live Floating Bioluminescent Spores */}
+          <ProceduralParticleSystem
+            theme={currentTheme}
+            activeSurgeNode={systemState.activeSurgeNode}
+            powerOutput={systemState.powerOutput}
+          />
+
+          {/* 6. 3D Spherical Terrarium Orb, Steady Rotating Reticles & Optical Aperture Core */}
+          <ProceduralCoreOrb
+            theme={currentTheme}
+            powerOutput={systemState.powerOutput}
+            rpm={systemState.rpm}
+            resonanceActive={systemState.resonance}
+            onCoreClick={handleOrbToggleMusic}
+            isPlayingMusic={isPlayingMusic}
+          />
+        </div>
+
+        {/* 2b. High-Performance Dark Meadow Grass Layer (Anchored to Chassis Bottom) */}
         <ProceduralBottomGrassLayer theme={currentTheme} />
-
-        {/* 3. Complex Non-Linear Stepped Conduits, Skeuomorphic Modules & Interactive Hotspots */}
-        <ProceduralHardwareLayer
-          theme={currentTheme}
-          powerOutput={systemState.powerOutput}
-          activeSurgeNode={systemState.activeSurgeNode}
-          onNodeClick={handleNodeClick}
-        />
-
-        {/* 4. Foreground Botanical Overgrowth Layer (Draping in Front of Conduits & Modules) */}
-        <ProceduralBotanicalEngine
-          theme={currentTheme}
-          layer="front"
-          foliageList={foliageList}
-          isWetMode={isWetMode}
-        />
-
-        {/* 5. Live Floating Bioluminescent Spores */}
-        <ProceduralParticleSystem
-          theme={currentTheme}
-          activeSurgeNode={systemState.activeSurgeNode}
-          powerOutput={systemState.powerOutput}
-        />
-
-        {/* 6. 3D Spherical Terrarium Orb, Steady Rotating Reticles & Optical Aperture Core */}
-        <ProceduralCoreOrb
-          theme={currentTheme}
-          powerOutput={systemState.powerOutput}
-          rpm={systemState.rpm}
-          resonanceActive={systemState.resonance}
-          onCoreClick={handleOrbToggleMusic}
-          isPlayingMusic={isPlayingMusic}
-        />
 
         {/* 7. Optical Flash Screen on Purge */}
         {systemState.isPurging && (
