@@ -1,10 +1,8 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+  <img width="100%" alt="CyberCore Reactor Terminal" src="assets/terminal_preview.png" />
+  <h1>CyberCore Reactor Terminal</h1>
+  <p>Procedural Biomechanical Cybernetic Reactor UI with Real-Time Telemetry & Audio Synthesis</p>
 </div>
-
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/5a96c8c5-0a18-4069-87f5-4a1321474b2e
 
